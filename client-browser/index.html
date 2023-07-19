@@ -1,0 +1,23 @@
+<!doctype html>
+	<html lang="en">
+	<head>
+		<link rel="stylesheet" href="node_modules/xterm/css/xterm.css" />
+		<script src="node_modules/xterm/lib/xterm.js"></script>
+	</head>
+	<body>
+		<div id="terminal" style="width: 800px;"></div>
+	<script>
+	var term = new Terminal();
+	term.open(document.getElementById('terminal'));
+	term.write('c[34mAwesome![0m\r\n');
+	term.write("\r\nThis is just an example of how I expect this to work; it's not actually working yet (ANSI escape codes aside).\r\n\n");
+	term.write("I copied the output of the PHP script I created (which isn't in Git yet cuz it\r\n");
+	term.write("doesn't do much) directly into xterm.js.  The end result is exactly what I got\r\n");
+	term.write("by running the Python script in my Linux terminal.  So it turns out, if we use\r\n");
+	term.write("ANSI instead of PHP, we can create a web app that runs in both environments,\r\n");
+	term.write("with no extra hoops to jump through.  The clients are \"dumb\" terminals.  The\r\n");
+	term.write("server is where all the big important stuff happens.  Yes, we have truly gone\r\n");
+	term.write("full circle, back to dumb terminals and systems on servers.  OH well, at least\r\nthis mobile mainframe is fun and retro. :)    ");
+</script>
+</body>
+</html>
