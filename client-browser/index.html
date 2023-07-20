@@ -1,23 +1,47 @@
 <!doctype html>
-	<html lang="en">
-	<head>
-		<link rel="stylesheet" href="node_modules/xterm/css/xterm.css" />
-		<script src="node_modules/xterm/lib/xterm.js"></script>
-	</head>
-	<body>
-		<div id="terminal" style="width: 800px;"></div>
-	<script>
-	var term = new Terminal();
-	term.open(document.getElementById('terminal'));
-	term.write('c[34mAwesome![0m\r\n');
-	term.write("\r\nThis is just an example of how I expect this to work; it's not actually working yet (ANSI escape codes aside).\r\n\n");
-	term.write("I copied the output of the PHP script I created (which isn't in Git yet cuz it\r\n");
-	term.write("doesn't do much) directly into xterm.js.  The end result is exactly what I got\r\n");
-	term.write("by running the Python script in my Linux terminal.  So it turns out, if we use\r\n");
-	term.write("ANSI instead of PHP, we can create a web app that runs in both environments,\r\n");
-	term.write("with no extra hoops to jump through.  The clients are \"dumb\" terminals.  The\r\n");
-	term.write("server is where all the big important stuff happens.  Yes, we have truly gone\r\n");
-	term.write("full circle, back to dumb terminals and systems on servers.  OH well, at least\r\nthis mobile mainframe is fun and retro. :)    ");
+<html lang="en">
+<head>
+	<title>Mobile Mainframe 1.0</title>
+</head>
+<body>
+<textarea cols="80" rows="24" aria-label="output" id="dummy"></textarea>
+<form id="form">
+<input type="text" autofocus autocomplete="off" aria-label="input" id="box"/>
+<input type="submit" value="Send"/>
+</form>
+<script>
+
+var url = "", token = "";
+async function send(input) {
+	var r = await fetch(url, {
+		method: 'POST',
+		headers:{'Content-Type':'application/x-www-form-urlencoded'},
+		body: "i=" + encodeURIComponent(input) + "&&t=" + token
+	});
+	r = await r.text();
+	dummy.value += r;
+}
+
+while(!url) url = prompt("Enter address:");
+(async function() {
+	var r = await fetch(url);
+	token = await r.text();
+	send("::welcome::");
+})();
+
+form.onsubmit = function(e) {
+	e.preventDefault();
+	if (box.value == "exit") {
+		send("::end-session::");
+		alert("Connection closed.");
+		location.reload();
+		return;
+	}
+	dummy.value += "> " + box.value + "\n";
+	send(box.value);
+	box.value = "";
+};
 </script>
+</body>
 </body>
 </html>

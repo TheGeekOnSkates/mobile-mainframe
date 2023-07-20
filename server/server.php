@@ -1,31 +1,50 @@
 <?php
 
-// I'm going with POST rather than sessions for 3 reasons:
-//
-//		1. For some reason, Python doesn't seem to care to save them.
-//			I've followed tutorials, scoured obscure SO posts, etc. and no
-//			dice.  Nothing seems to work, because {reasons}.  Don't care.
-//			If this gets bigger than it was ever meant to be, version 2.0
-//			can use cookies.  If we even need that.
-//
-//		2. When I go to build the JS terminal, POST makes more sense since
-//			I can send it from my code (no such animal with sessions).  This
-//			is especially important if the terminals will support multiple
-//			websites - sessions are fine, but CORS can be a witch. :D
-//
-//		3. In a way, a POST "token" is more flexible than sessions; I can
-//			refresh them, expire them, etc. in ways that are a bit harder
-//			in PHP (session_unset, session_destory, etc. etc. etc.).
-//			So if this DID get big enough to use for more than just the
-//			funzos, it's almost a little more... idk, I just know it's not
-//			necessarily wrong.  Just different.  Like this project. :D
-if (!isset($_POST['t'])) exit(date("YmdHis"));
+// It should be noted that when this is not running in localhost, it
+// would be best to put this outside the publicly-accessible web root. :D
+// Just stayin'.  But for now, not an issue.
+$path = ".";
 
-// Handle user error
-// this one doesn't tak 300 lines of comments to explain :D
-if (!isset($_POST['c'])) exit("Missing command.\n");
+// Get the user's token.  If one wasn't passed, create a new file to
+// store stuff, and return the name of that file.
+$token = $_POST['t'];
+if (!isset($token)) {
+	$token = date("YmdHis");
+	file_put_contents("$path/$token.json", "{}");
+	exit($token);
+}
 
-// Now we got our command, what do we do with it?  How about something really dumb, something I would never do in serious code? :D
-$command = $_POST['c'];
+// Make sure there is a file matching the token; note that down the
+// road, I'll have a background job deleting old token files.  Buf for now,
+// I don't really care, so just check if it exists and save it to memory.
+if (!file_exists("$path/$token.json")) exit("Your token has expired.\r\n");
+$data = json_decode(file_get_contents("$path/$token.json"), true);
 
-echo shell_exec($command);
+// Get the user's input
+$input = $_POST['i'];
+if (!isset($input)) exit("Missing input.\n");
+
+// Welcome message
+if ($input == "::welcome::") exit("\r\n\r\n2 days to Friday! :D\r\nUsername:\t");
+
+// Exit message
+if ($input == "::end-session::") {
+	unlink("$path/$token.json");
+	exit("Bye.\r\n");
+}
+
+// Obviously this is just for kicks, no SSL or anything (YET), but how
+// about a little username check at least?  More proof of concpet stuff.
+if (!array_key_exists('user', $data)) {
+	if ($input == "geek") {
+		$data['user'] = "geek";
+		file_put_contents("$path/$token.json", json_encode($data));
+		exit("Okay, you're in!\n");
+	}
+	else exit("Username:\t");
+}
+
+// Now we got our command, what do we do with it?  How about something
+// really dumb, something I would never do in serious code! Woooo! :D
+echo shell_exec($input);
+

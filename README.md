@@ -1,13 +1,12 @@
 # "Mobile Mainframe"
 
+# url = "http://localhost/mobile-mainframe/mm.php"
+
 ## Next steps
 
-This guy is officially at the proof-of-concept stage!  Yay! :D
+I now have fully functional clients for both the terminal and the browser.
+As this project was only ever really for fun, tinkering to get my mind off work etc. I kinda didn't have too many plans beyond this...
 
-Seriously though, there are a few things I'd like to do at this point:
-
-1. I kinda want to nail down the "spec", the details of how clients will connect to the server.  Version 1.0 is obviously gonna be crazy simple.  Client sends request, server sends response.  The question is how to track state info.  Like okay, for one-off commands it's easy.  There is no interactivity.  But let's say I wanted something like /bin/ed, or one of the command-line apps I've built for myself.  Those ask me for info in a more back-and-forth interactive way.  If the server is doing all the processing, it's gotta have some kind of way of saving that info.
-2. Once that's done, I kinda want to add one more feature to my Python-based client: a way to open different URLs (so it's not "hard-coded" like I have it now).
-3. I'd like to create a browser-based terminal, simpler than xterm.js.  Version 1.0 of this project is gonna be much simpler.  Less like xterm, more like the old DEC dumb terminals.  No cursor positioning, no color, simple.
-
-Once I have these things in place, *then* I can do fancy-ANSI stuff and all that jazz... but that's a long way off. :)
+* Gotta style up the browser version - maybe find a good pic of a dumb terminal and have it output on top of that. :D
+* Of course, if I get it working with xterm.js, that opens up more options in terms of color, but then we get into ANSI graphics and all that jazz... just don't think I'm ready for that yet.
+* I kinda want to flesh out the server-side of this a bit more.  Like most of what I have here should really be in like a setup.php, so app-specific functionality can go in the page actually being requested.
