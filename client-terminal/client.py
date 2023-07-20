@@ -1,4 +1,13 @@
 import requests
-url = "http://104.200.17.247/apps/mm/index.php"
-r = requests.post(url, data={"awesome": "It works!" })
-print(r.text)
+
+s = requests.Session()
+url = "http://localhost/mobile-mainframe.php"
+r = s.post(url)
+token = r.text
+while True:
+	print("> ", end="")
+	cmd = input()
+	if cmd == "exit":
+		break
+	r = s.post(url, data={"c": cmd, "t": token})
+	print(r.text, end="")
