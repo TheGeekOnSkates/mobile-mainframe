@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Mobile Mainframe 1.0</title>
+</head>
+<body>
+<img src="dumb.png" alt="" role="presentation"/>
+<textarea autofocus spellcheck="false" cols="40" rows="24" aria-label="output" id="dummy">
+
+ENTER ADDRESS:  
+</textarea>
+<script>
+
+var url = "", token = "", line = "";
+dummy.selectionStart = dummy.value.length;
+
+async function send(input) {
+	try {
+	var r = await fetch(url, {
+		method: 'POST',
+		headers:{'Content-Type':'application/x-www-form-urlencoded'},
+		body: "i=" + encodeURIComponent(input) + "&&t=" + token
+	});
+	r = await r.text();
+	dummy.value += r;
+	} catch(wtf) {
+		dummy.value += wtf + "\n";
+	}
+	dummy.selectionStart = dummy.value.length;
+}
+
+
+var line = "";
+setInterval(async function() {
+	if (!line) return;
+	if (!url) {
+		url = line;
+		console.log(url);
+		var r = await fetch(url);
+		token = await r.text();
+		send("::welcome::");
+		return;
+	}
+
+	if (line == "exit") {
+		send("::end-session::");
+		dummy.balue += "Connection closed.\n\nENTER ADDRESS:\n";
+		url = "";
+		line="";
+		return;
+
+
