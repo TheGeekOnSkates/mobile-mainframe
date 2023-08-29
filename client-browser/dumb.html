@@ -4,34 +4,31 @@
 	<title>Mobile Mainframe 1.0</title>
 </head>
 <body>
-<img src="dumb.png" alt="" role="presentation"/>
-<textarea autofocus spellcheck="false" cols="40" rows="24" aria-label="output" id="dummy">
+	<textarea autofocus spellcheck="false" cols="80" rows="24" aria-label="output" id="dummy">ENTER ADDRESS:  
 
-ENTER ADDRESS:  
+
 </textarea>
 <script>
 
 var url = "", token = "", line = "";
-dummy.selectionStart = dummy.value.length;
 
 async function send(input) {
 	try {
-	var r = await fetch(url, {
-		method: 'POST',
-		headers:{'Content-Type':'application/x-www-form-urlencoded'},
-		body: "i=" + encodeURIComponent(input) + "&&t=" + token
-	});
-	r = await r.text();
-	dummy.value += r;
+		var r = await fetch(url, {
+			method: 'POST',
+			headers:{'Content-Type':'application/x-www-form-urlencoded'},
+			body: "i=" + encodeURIComponent(input) + "&&t=" + token
+		});
+		r = await r.text();
+		dummy.value += r + "\n";
 	} catch(wtf) {
 		dummy.value += wtf + "\n";
 	}
-	dummy.selectionStart = dummy.value.length;
 }
 
-
-var line = "";
 setInterval(async function() {
+	dummy.selectionStart = dummy.selectionEnd = dummy.value.length;
+	dummy.scrollTop = dummy.scrollHeight;
 	if (!line) return;
 	if (!url) {
 		url = line;
@@ -41,12 +38,25 @@ setInterval(async function() {
 		send("::welcome::");
 		return;
 	}
-
 	if (line == "exit") {
 		send("::end-session::");
-		dummy.balue += "Connection closed.\n\nENTER ADDRESS:\n";
+		dummy.value += "Connection closed.\n\nENTER ADDRESS:\n";
 		url = "";
-		line="";
+		line = "";
 		return;
+	}
+	send(line);
+	line = "";
+}, 100);
 
-
+dummy.addEventListener("keydown", function(e) {
+	if (e.key == "Enter" || e.which == 13) {
+		var lines = dummy.value.split("\n");
+		console.log(lines);
+		line = lines[lines.length - 1];
+		console.log("line = " + line);
+	}
+});
+</script>
+</body>
+</html>
