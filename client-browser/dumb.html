@@ -1,17 +1,38 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<title>Mobile Mainframe 1.0</title>
+<title>Mobile Mainframe 1.0</title>
+<style>
+/*
+This was cool, but it apparently it accurately emulates those old teletypes,
+so perfectly that not all ASCII characters are supported. :D
+Not quote going _that_ far with this.
+@font-face {
+font-family: "teletype";
+src: url("TELETYPE1945-1985.ttf");
+}
+*/
+textarea {
+position:absolute; left: 0px; top: 0px;
+width: 100vw; height: 100vh; border: none;
+/* font-family: teletype; */
+font-family: monosapce; font-weight: bold; font-size: 1rem;
+margin: 10px; margin-top: 20px; resize: none;
+background: #F0F0F0; color: black;
+}
+textarea:focus{outline: none;}
+</style>
 </head>
 <body>
-	<textarea autofocus spellcheck="false" cols="80" rows="24" aria-label="output" id="dummy">ENTER ADDRESS:  
-
-
-</textarea>
+	<textarea autofocus spellcheck="false" aria-label="output" id="dummy"></textarea>
 <script>
 
 var url = "", token = "", line = "";
 
+/**
+ * Sends user input to the server
+ * @param {string} input The input
+ */
 async function send(input) {
 	try {
 		var r = await fetch(url, {
@@ -26,18 +47,27 @@ async function send(input) {
 	}
 }
 
+// Update the textarea on a loop
 setInterval(async function() {
-	dummy.selectionStart = dummy.selectionEnd = dummy.value.length;
+	// This was making it impossible to copy output
+	//dummy.selectionStart = dummy.selectionEnd = dummy.value.length;
+	
+	// Use this to auto-scroll to the bottom (visually)
 	dummy.scrollTop = dummy.scrollHeight;
+	
+	// If there is no input, do nothing
 	if (!line) return;
+	
+	// If the server URL is blank/empty, start a connection
 	if (!url) {
 		url = line;
-		console.log(url);
 		var r = await fetch(url);
 		token = await r.text();
 		send("::welcome::");
 		return;
 	}
+	
+	// If the line is "exit", close the connection
 	if (line == "exit") {
 		send("::end-session::");
 		dummy.value += "Connection closed.\n\nENTER ADDRESS:\n";
@@ -45,6 +75,8 @@ setInterval(async function() {
 		line = "";
 		return;
 	}
+	
+	// Otherwise, it's some other input - send it
 	send(line);
 	line = "";
 }, 100);
@@ -52,11 +84,12 @@ setInterval(async function() {
 dummy.addEventListener("keydown", function(e) {
 	if (e.key == "Enter" || e.which == 13) {
 		var lines = dummy.value.split("\n");
-		console.log(lines);
 		line = lines[lines.length - 1];
-		console.log("line = " + line);
 	}
 });
+window.onload = function() {
+	dummy.value = "MOBILE MAINFRAME 1.0\nEnter address:\n\n";
+};
 </script>
 </body>
 </html>
