@@ -22,7 +22,7 @@ def main():
 	while True:
 		
 		# Get the user's input
-		print("> ", end="")
+		print("\n> ", end="")
 		cmd = input()
 		
 		# If the user wants out, tell the server and peace out
