@@ -9,9 +9,13 @@ def main():
 		return
 	
 	# Get the token
-	s = requests.Session()
-	r = s.post(url)
-	token = r.text
+	try:
+		s = requests.Session()
+		r = s.post(url)
+		token = r.text
+	except:
+		print("Invalid URL")
+		return
 	
 	# Get the welcome message
 	s = requests.Session()

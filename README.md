@@ -2,19 +2,7 @@
 
 ## Next steps
 
-First, I found a minor bug: The web client is sending a message along with `::welcome::`; that's why my welcome message and password bouncer message show at the same time.  To fix this:
-	- On the JS side, if it's sending `::welcome``, set it up to not send anything else.
-	- On the server side, include a password request in the welcome message
-	- Make sure it works the same in both clients
-
-After that... I'm at a place where I'm cool with calling Mobile Mainframe 1.0 complete!  It works great in both clients, so all it really needs now is docs.  Maybe turn the page I started on earlier tonight into a "[GitHub Page](https://www.perplexity.ai/search/3fca39c4-0633-4650-99d2-532343f349c4?s=u)"
-
-## Thoughts about future 1.x releases
-
-* I'd kinda like to turn setup.php into a kind of library, something mobile mainframes can use without having to do all those file_get/put_contents calls directly... but I might not bother going there.  Any spare time I have for this is would probably be more fun working on 2.0 :-)
-* I do, tho, want to put a live demo up (for myself) so I can test it on my iPhone.  I might keep a personal 1.0 instance up and running, maybe use it for some slightly more useful tools.  But the live demo might lead to some CSS tweaks, JS fixes (cuz Safari is the new IE, lol) and stuff like that.
-* I'd kinda like to see if my Python client will run in Termux - that might lead to a patch or towo too.
-
+I'm at a place where I'm cool with calling Mobile Mainframe 1.0 complete!  It works great in both clients, so all it really needs now is docs.  Maybe turn the page I started on earlier tonight into a "[GitHub Page](https://www.perplexity.ai/search/3fca39c4-0633-4650-99d2-532343f349c4?s=u)"
 
 ## Game plan for version 2.0
 

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Mobile Mainframe</title>
+	<style>
+	body {
+		display:flex;margin:0px;
+		height:100vh;
+	}
+	.left {
+		flex-basis:160px;
+		background: #000;
+		height:100%;
+	}
+	header img{
+		width:100%;
+		height:auto;
+	}
+	header h1{
+		color:#00F;
+		font-family:monospace;
+		font-size:1.5rem;
+		margin:10px;
+		text-align: center;
+	}
+	nav * {
+		list-style:none;
+		text-decoration:none;
+		font-family: monospace;
+		font-size:1.25rem;
+		color:yellow;
+		margin:0px;
+		padding:0px;
+		margin-top: 10px;
+	}
+	nav *:focus {
+		outline:none;
+		color:#FFF;
+	}
+	main {
+		padding: 10px;
+	}
+	h1, h2, h3, h4 {
+		font-family: monospace;
+		color: navy;
+	}
+	</style>
+</head>
+<body>
+	<div class="left">
+		<header>
+			<h1>Mobile Mainframe</h1>
+			<img src="icon.png" alt=""/>
+		</header>
+		<nav><ul>
+			<li><a href="#intro">Intro</a></li>
+			<li><a href="#isnt">What this is NOT</a></li>
+			<li><a href="#is">What this IS</a></li>
+			<li><a href="#server">Server</a></li>
+			<li><a href="#browser">Browser client</a></li>
+			<li><a href="#terminal">Terminal client</a></li>
+			<li><a href="#v1">To-Do for version 1</a></li>
+			<li><a href="#v2">Plans for version 2</a></li>
+		</ul></nav>
+	</div>
+	<main>
+		<h1 id="intro">Intro</h1>
+		<div style="display: flex">
+			<p>
+			Many centuries ago, at the very Dawn of Time, when the Deep
+			Magic was first being etched upon the Stone Table, computers
+			were... well in a lot of ways they were very similar to how we
+			do things today.  People had devices called terminals, that
+			didn't do a whole lot by themselves.  They looked like
+			computers, but they were more like magic doors; all they did
+			was to send and receive messages from these massive computers
+			called mainframes.  Some of them could do some cool things on
+			their own, fancy tricks like colors and cursor positioning, but
+			the mainframe controlled just about everything.  Everyone hooked
+			up their machines to them, anything users typed was sent to
+			them, and anything that was printed (on a screen or on paper -
+			yes, the earliest models used paper) came from them.  
+			</p>
+			<img src="then.png" alt="" />
+		</div>
+		<div style="display: flex">
+			<img src="now.png" alt="" style="height:300px;width:auto;"/>
+			<p>
+			Today, we've replaced terminals with phones and tablets, and
+			today's version of the mainframe is what Big Tech has branded
+			"the cloud".  Our devices are capable of a lot better graphics,
+			and our connection to this mysterious thing we call the cloud
+			is wireless now.  Yes, technology has come a long way since the
+			Dawn of Time, and at one point were were really using all that
+			power to its full potential... but nowadays we've kind of gone
+			back to where our devices are just how we get in.  All the good
+			stuff is done "in the clouds".
+			</p>
+		</div>
+		<p>
+		Now I'm over-simplifying a lot - and any computer geek would agree
+		that the analogy is a stretch - but it's kinda not (lol).  Our
+		computers are so powerful that we can run emulators in emulators.
+		I can run an emulated C64 inside an emulated DOS box.  I can run a
+		full-on Windows computer in a web browser.  We have all this power,
+		and yet we want to store all our stuff on someone else's computer.
+		As a result, our computers - as powerful as they are - run slow.
+		Again, I'm oversimplifying here, but still... this shouldn't be the
+		case.  Computers today aren't really doing that much more than what
+		computers were doing 20 years ago.  Searching the web, catching up
+		on news and stuff, listening to music, even instant messaging... all
+		of that was easily doable 20 years ago.  Videos are the only serious
+		resource-munchers that have any right to be.  But for test?  It's
+		kind of gotten out of control.
+		</p>
+		<p>
+		So I got to thinking, how can we lighten the load a bit?  How can we
+		still have some cool text effects and all that, but get rid of all
+		the unnecessary junk?  If we're going to use the old mainframe-style
+		store-everything-on-a-remote-computer thing... how can we use that
+		thing to the max?  That's what this project is about.
+		</p>
+		<h1 id="isnt">What this is NOT</h1>
+		<p>
+		Despite its name, "Mobile Mainframe" is NOT a mainframe emulator.  I
+		don't know why you'd want one of those, much less on a mobile phone,
+		cuz even for us retro-leving tech geeks there's just not a lot you
+		could really do with that.  Also, most mainframe systems from back
+		then were proprietary, so even if I really wanted it to be one, I
+		couldn't do that legally - and I'm not cool with that.
+		</p>
+		<h1 id="is">What this IS</h1>
+		<p>
+		<strong>Short version: A new, lighter way to send and receive text
+		over the web.</strong>  This software includes two clients: one for
+		an actual terminal program (like xterm or cmd.exe) and the other for
+		a web browser.  It defines a simple communication protocol (for lack
+		of a better term) between clients and servers.  It also includes an
+		example server, written in PHP.  At the moment, it does this using
+		HTTP(S); eventually, I'd like it to support WebSockets, but for now
+		it uses the same request/response setup as its bloated counterparts.
+		I'll get into all the details of it in the following manual.
+		</p>
+	</main>
+</body>
+</html>

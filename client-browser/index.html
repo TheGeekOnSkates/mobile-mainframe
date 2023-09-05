@@ -69,6 +69,7 @@ setInterval(async function() {
 		var r = await fetch(url);
 		token = await r.text();
 		send("::welcome::");
+		line = "";
 		return;
 	}
 	

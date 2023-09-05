@@ -3,7 +3,7 @@
 include_once("setup.php");
 
 // Welcome message - I was watching a pirate flick tonight, so this works
-if ($input == "::welcome::") exit("\n\n\n\nAvast, ye scallywag!\n\nI was listening to a fun pirate movie when I coded this goofy demo.  But before I let ye abord...\n");
+if ($input == "::welcome::") exit("\n\n\n\nAvast, ye scallywag!\n\nI was listening to a fun pirate movie when I coded this goofy demo.\nBut if ye want to come aboard, you'll have to give me the password.\n");
 
 // Exit message
 if ($input == "::end-session::") {
@@ -19,14 +19,14 @@ if (!array_key_exists('user', $data)) {
 		file_put_contents("$path/$token.json", json_encode($data));
 		printf("Welcome aboard, matey!\n\n");
 		printf("So here's what ye can do here:\n");
-		printf("    To see a short message in big text, type big {your message}\n");
+		printf("    To see some big text, type shout {your message}\n");
 		printf("    To see a list of files below dec, type files\n");
 		printf("    If yer a landlover, ye can run cowsay here.  No quotes.  Capn's orders.\n");
 		printf("    To play a little game, type game\n\n");
 		printf("    To abandon ship, type exit\n\n");
 		exit();
 	}
-	else exit("Arrrrrg... Password?\t");
+	else exit("\nTry again, ya sea dog!\t");
 }
 
 // If the user wants to play guess-a-number, start the game.
@@ -65,8 +65,8 @@ if (preg_match("~^cowsay ~", $input)) {
 }
 
 // If the user wants to see big text, do that
-if (preg_match("~^big ~", $input)) {
-	$input = str_replace("big ", "", $input);
+if (preg_match("~^shout ~", $input)) {
+	$input = str_replace("shout ", "", $input);
 	$args = escapeshellarg($input);
 	exit(shell_exec("/usr/bin/toilet $args"));
 }
