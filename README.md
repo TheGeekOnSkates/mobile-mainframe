@@ -3,19 +3,7 @@
 ## Next steps
 
 * Finish the docs (mostly CSS work at this point)
+	- Then create a `gh-pages` branch with my docs
 * Add a license; both xterm.js and libwebsockets are MIT licensed, so maybe look at that one and see what I need to do to choose that
-
-## Game plan for version 2.0
-
-Here's where things really start to get interesting!
-
-### Clients
-
-* I found out there's a "libwebsockets" - a C API for WebSockets!  This means Mobile Mainframe 2.0 can support WebSockets in both the terminal AND the browser.  That would be awesome!  Probably won't run on Termux... I'd be shocked if it had a libwebsockets port (but then again maybe).  But Who cares?  If we're talking WebSockets, we're talking browsers - and everything has a browser.
-* And speaking of which, at this point it'll finally be time for xterm.js.  Of course I envisioned this thing using xterm.js from day 1, so I was always heading in this direction for clients.  Not a big deal in v1, but WebSockets changes things.  Over HTTP, who cares... but once you're talking WebSockets, who knows!  I've seen Vim, bastet, even full-on SSH shells running over WebSockets.  In fact... I think one of our customers at work is using it as the front-end to an actual mainframe. :-D
-
-
-### Servers
-
-* I also recently scored a free Python (Bottle) web hosting account, so I'd like to see if I can build a Mobile Mainframe server for Bottle.  Of course, there are more languages out there - C#, Java, Ruby - and hundreds more frameworks - Django, Flask, CodeIgniter, Laravel, Rails etc. - so there's no way I'll be able to support them all.  But PHP is what, 80% of the internet?  Whatever.  I think my point at this stage of the game is, to define the "protocol" (for lack of a better word) for servers.  Things like `::welcome::` that are not user input, but input from clients themselves.
-* Back in PHP-land, with libwebsockets comes cookie-based sessions!  So instead of using those JSON files for user sessions, I can just use $_SESSION like any other web app.  Maybe I'll find a free web hosting with SSL included (my Python server has SSL) and do an actual login!
+	- Add the license to the docs if necessary
+* Update this README so it points to my docs page :-)
