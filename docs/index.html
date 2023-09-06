@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Mobile Mainframe</title>
+	<style>
+	.left {
+		position:absolute; left: 0px; top:0px;
+		width: 160px; height: 110vw;
+		background: #000;
+		margin: 0px; padding: 0px;
+	}
+	main {
+		position:absolute; left: 160px; top:0px;
+		max-width: 800px; height: 100vw;
+		overflow-y: scroll;
+		margin: 0px; padding: 0px;
+	}
+	header img{
+		width:100%;
+		height:auto;
+	}
+	header h1{
+		color:#00F;
+		font-family:monospace;
+		font-size:1.5rem;
+		margin:10px;
+		text-align: center;
+	}
+	nav * {
+		list-style:none;
+		text-decoration:none;
+		font-family: monospace;
+		font-size:1.25rem;
+		color:yellow;
+		margin:0px;
+		padding:0px;
+		margin-top: 10px;
+	}
+	nav *:focus {
+		outline:none;
+		color:#FFF;
+	}
+	main {
+		padding: 10px;
+	}
+	h1, h2, h3, h4 {
+		font-family: monospace;
+		color: navy;
+	}
+	</style>
+</head>
+<body>
+	<div class="left">
+		<header>
+			<h1>Mobile Mainframe</h1>
+			<img src="icon.png" alt=""/>
+		</header>
+		<nav><ul>
+			<li><a href="#intro">Intro</a></li>
+			<li><a href="#isnt">What this is NOT</a></li>
+			<li><a href="#is">What this IS</a></li>
+			<li><a href="#server">Server</a></li>
+			<li><a href="#browser">Browser client</a></li>
+			<li><a href="#terminal">Terminal client</a></li>
+			<li><a href="#v2">Plans for version 2</a></li>
+		</ul></nav>
+	</div>
+	<main>
+		<h1 id="intro">Intro</h1>
+		<div style="display: flex">
+			<p>
+			Many centuries ago, at the very Dawn of Time, when the Deep
+			Magic was first being etched upon the Stone Table, computers
+			were... well in a lot of ways they were very similar to how we
+			do things today.  People had devices called terminals, that
+			didn't do a whole lot by themselves.  They looked like
+			computers, but they were more like magic doors; all they did
+			was to send and receive messages from these massive computers
+			called mainframes.  Some of them could do some cool things on
+			their own, fancy tricks like colors and cursor positioning, but
+			the mainframe controlled just about everything.  Everyone hooked
+			up their machines to them, anything users typed was sent to
+			them, and anything that was printed (on a screen or on paper -
+			yes, the earliest models used paper) came from them.  
+			</p>
+			<img src="then.png" alt="" style="width:auto;height:200px;"/>
+		</div>
+		<div style="display: flex">
+			<img src="now.png" alt="" style="width:auto;height:200px;"/>
+			<p>
+			Today, we've replaced terminals with phones and tablets, and
+			today's version of the mainframe is what Big Tech has branded
+			"the cloud".  Our devices are capable of a lot better graphics,
+			and our connection to this mysterious thing we call the cloud
+			is wireless now.  Yes, technology has come a long way since the
+			Dawn of Time, and at one point were were really using all that
+			power to its full potential... but nowadays we've kind of gone
+			back to where our devices are just how we get in.  All the good
+			stuff is done "in the clouds".
+			</p>
+		</div>
+		<p>
+		Now I'm over-simplifying a lot - and any computer geek would agree
+		that the analogy is a stretch - but it's kinda not (lol).  Our
+		computers are so powerful that we can run emulators in emulators.
+		I can run an emulated C64 inside an emulated DOS box.  I can run a
+		full-on Windows computer in a web browser.  We have all this power,
+		and yet we want to store all our stuff on someone else's computer.
+		As a result, our computers - as powerful as they are - run slow.
+		Again, I'm oversimplifying here, but still... this shouldn't be the
+		case.  Computers today aren't really doing that much more than what
+		computers were doing 20 years ago.  Searching the web, catching up
+		on news and stuff, listening to music, even instant messaging... all
+		of that was easily doable 20 years ago.  Videos are the only serious
+		resource-munchers that have any right to be.  But for test?  It's
+		kind of gotten out of control.
+		</p>
+		<p>
+		So I got to thinking, how can we lighten the load a bit?  How can we
+		still have some cool text effects and all that, but get rid of all
+		the unnecessary junk?  If we're going to use the old mainframe-style
+		store-everything-on-a-remote-computer thing... how can we use that
+		thing to the max?  That's what this project is about.
+		</p>
+		<h1 id="isnt">What this is NOT</h1>
+		<p>
+		Despite its name, "Mobile Mainframe" is NOT a mainframe emulator.  I
+		don't know why you'd want one of those, much less on a mobile phone,
+		cuz even for us retro-leving tech geeks there's just not a lot you
+		could really do with that.  Also, most mainframe systems from back
+		then were proprietary, so even if I really wanted it to be one, I
+		couldn't do that legally - and I'm not cool with that.
+		</p>
+		<h1 id="is">What this IS</h1>
+		<p>
+		<strong>Short version: A new, lighter way to send and receive text
+		over the web.</strong>  This software includes two clients: one for
+		an actual terminal program (like xterm or cmd.exe) and the other for
+		a web browser.  It defines a simple communication protocol (for lack
+		of a better term) between clients and servers.  It also includes an
+		example server, written in PHP.  At the moment, it does this using
+		HTTP(S); eventually, I'd like it to support WebSockets, but for now
+		it uses the same request/response setup as its bloated counterparts.
+		I'll get into all the details of it in the following manual.
+		</p>
+		<h1 id="server">Server</h1>
+		<p>
+		Before I can talk about much else, it's important to go over how the
+		server works.  The big difference between Mobile Mainframe and basic
+		websites is that every page is a server.  What I mean is, users can
+		"connect to" any page that supports the Mobile Mainframe way of
+		doing things (I hesitate to call it a "protocol" cuz it's not like
+		TCP or UDP or WebSockets... it's more of a way to get clients and
+		servers talking to each other).  So the client/server communication
+		process works like this:
+		</p>
+		<ol>
+			<li>Clients ask the user for a URL.</li>
+			<li>
+			Users enter the URL, and the client sends the server an HTTP(S)
+			request, asking the server for a token; this token gets passed
+			to all future requests, and basically works like a session
+			cookie.  The client gets the token and then sends another HTTP
+			request, this time with the code <code>::welcome::</code>.
+			This tells the server, "hey, I got your token, now show me what
+			else I can do on here".
+			</li>
+			<li>The user sends whatever commands the server allows</li>
+			<li>
+			The server responds accordingly, and this back-and-forth
+			continues for as long as the user wants to use this server.
+			</li>
+			<li>
+			When the user wants to exit, s/he types "exit", and the client
+			sends another code, <code>::end-session::</code>.  This tells
+			the server, "the user is done, delete whatever mechanism you
+			have in place to store user session ddata."
+			</li>
+		</ol>
+		<p>
+		And the rest is entirely up to you.  If you want to store users'
+		session state in a database, or (as I did) a text file, you can do
+		that.  Cookie-based sessions are not currently an option, mainly
+		because one of the two clients doesn't support it.  But all the real
+		"heavy lifting" is done on the server-side.  There is no dynamically
+		loading UI, no placeholders for where content <em>will</em> be, none
+		of the junk that geeks like me dislike about the modern web.  JS is
+		necessary, but can be kept to a minimum.  Even the markup is cut out
+		as HTML is replaced with plain text - there are no tags.  I could
+		see this working really well, even on low-end phones in areas with
+		lousy internet service.  It's as light as a modern-web-thing can
+		possibly get unless you're gonna use a terminal app.  Which brings
+		me to the next part: clients.
+		</p>
+		<h1 id="browser">Browser client</h1>
+		<p>
+		Because this thing's supposed to work on mobile devices, this new
+		text-only way of doing things still needs to run in a web browser
+		(obviously, lol).  Because of the geeky name and the ridiculously
+		old-school style of this project, I made it look kinda like a piece
+		of paper on one of those old teletype terminals. :-)
+		</p>
+		<img style="width:100%" src="browser.png" alt="Example of what the browser client looks like" longdesc="In this example, I connected to ../server/server.php, then it greeted me with a goofy intro.  The main thing to know, if you're hearing this from a screen reader, is that everything is done using a multi-line text box."/>
+		<p>
+		Now the main thing to keep in mind, if you're going to use this
+		browser-based client, is that <a href="https://developer.mozilla.org/en-US/docs/Glossary/CORS" target="_blank">CORS</a>
+		is a problem.  You can only connect to pages on your domain, which
+		is a bit annoying.  In another words, if I host this on example.com,
+		I can't connect to servers at geekonskates.com.  Not a big deal, but
+		still a thing to be aware of.
+		</p>
+		<h1 id="terminal">Terminal client</h1>
+		<p>
+		But can we go even lighter?  What if you're using Termux on Android,
+		or whichever terminal app Apple hasn't banned off iOS?  For this, I
+		created a simple Python script.  So if you're a real terminal fan
+		(like me) you can cut out the browser altogether and just use that.
+		It was built for Python 3, and it uses the <code>requests</code>
+		module (which I think is standard now?  lol I forget).  But on the
+		positive side, it doesn't have the CORS restriction.
+		</p>
+		<img style="width:100%" src="terminal.png" alt="Example of what the terminal client looks like" longdesc="The main difference as far as screen reader users are concerned is the URL.  In the web version, I used a relative path (starting with ../).  In the terminal, I had to use the full URL, http://localhost/mobile-mainframe/server/server.php.  The URL might be different for you depending on how your server is set up."/>
+		<h1 id="v2">Plans for version 2.0</h1>
+		<p>
+		Version 1.0 is done, and it works, and that's neat.  But version 2
+		is where I hope to see this project become what I originally had in
+		mind.  When I came up with this idea of replacing HTML with text, I
+		didn't just mean black-and-white, line-oriented text: I meant more
+		like a full-on "smart" terminal with ANSI support and "real-time"
+		communication.  <strong>TL;DR: WebSockets</strong>
+		</p>
+		<ul>
+			<li>
+			So first off is the terminal-based client: As it turns out,
+			there's a freed/open-source library called <a href="https://libwebsockets.org/" target="_blank">libwebsockets</a>
+			that looks like exactly what I'm looking for.  So the terminal
+			client will have to be rewritten in C... but on the positive
+			side, libwebsockets also supports cookie-based sessions, wo it
+			could lead to some improvements over v1 even on the HTTP side.
+			</li>
+			<li>
+			That's great if you're working in a terminal, but what about the
+			browser?  Well for that, <a href="https://xtermjs.org/" target="_blank">xterm.js</a>
+			is about as good as it gets!  Screen reader accessible, full
+			support for ANSI escape codes, and it's still pretty light (just
+			one CSS file and one JS file).  I've seen people run everything
+			from vim (a text editor) to bastet (a Tetris clone) to full-on
+			SSH shells over WebSockets using xterm.js.
+			</li>
+			<li>
+			On the server side... I don't have any huge changes in mind, but
+			I do have a couple smaller ideas.  I already mentioned session
+			cookies, but it's not just that.  There's also the possibility
+			of creating some more examples for how to set up a server.  I
+			recently got a free Python hosting account, so I'll probably do
+			a server example in Python/Bottle.  No way to do them all (Rails
+			and ASP.NET and Java and a bazillion frameworks like CodeIgniter
+			and Laravel and so on and so on and so on) but one or two more
+			sounds dosable. :-)
+			</li>
+		</ul>
+		<div style="height:100px;"><!-- spacer --></div>
+	</main>
+</body>
+</html>
