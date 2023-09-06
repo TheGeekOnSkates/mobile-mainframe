@@ -2,7 +2,8 @@
 
 ## Next steps
 
-I'm at a place where I'm cool with calling Mobile Mainframe 1.0 complete!  It works great in both clients, so all it really needs now is docs.  Maybe turn the page I started on earlier tonight into a "[GitHub Page](https://www.perplexity.ai/search/3fca39c4-0633-4650-99d2-532343f349c4?s=u)"
+* Finish the docs (mostly CSS work at this point)
+* Add a license; both xterm.js and libwebsockets are MIT licensed, so maybe look at that one and see what I need to do to choose that
 
 ## Game plan for version 2.0
 
