@@ -114,3 +114,19 @@ window.onload = function() {
 	url = line = token = "";
 };
 
+/*
+Looks like the it works like this:
+ws = new WebSocket("ws://my-url-here");
+ws.on("open", function() {
+	console.log("connected");
+});
+ws.on("close", function() {
+	console.log("connection closed");
+});
+ws.on("message", function(message) {
+	// Output message to the terminal
+});
+ws.send("some message here");
+
+
+*/
