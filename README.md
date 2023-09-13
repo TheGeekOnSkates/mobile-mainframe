@@ -5,8 +5,8 @@ It's not a mainframe emulator for mobile (sorry to the 2 or 3 of you who may hav
 ## TO-DO's for version 2.0:
 
 1. As I go thru steps 2-3, add features to the URL-reading code in `onInput`
-2. Review how to use WebSockets in JS, write a mini-program to test in both PHP and JS
-3. Write a more complete server program and get the browser client talking to it
+2. Write a server program and get the browser client talking to it
+3. See if I can get PHP to just relay data between the client and a Linux app (text editor, maybe a game? etc. :-D)
 4. Once it seems the web version is good enough to call done... which in and of itself would be *amazing*... build the terminal client (using C and libwebsockets).  Maybe a little chat program that browser and terminal clients can get on together.
 5. Test, polish, WTFM, and push to master! :-)
 
