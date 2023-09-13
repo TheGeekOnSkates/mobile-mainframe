@@ -4,23 +4,11 @@
 YES!!!!
 https://medium.com/@cn007b/super-simple-php-websocket-example-ea2cd5893575
 
-Okay, now that this actually works, what's next:
+To start the server:	php -q server2.php
 
-1. Get the client to connect over WebSockets.
+URL to enter:	ws://0.0.0.0:12345/server2.php
+	- Maybe try this with "localhost" instead of "0.0.0.0"?
 
-// Code from the tutorial, with a minor mod on my part:
-var host = 'ws://0.0.0.0:12345/server2.php';
-
-2. Mod the server so that if a client disconnects, instead of showing an
-error, log it and quit trying to talk to that client.
-
-3. Then the fun really starts! :-)
-	- Create a better interactive app in PHP; maybe a chat platform
-	- Try to get PHP playing middle-man for a Linux app, such as...
-		* Darkest Hour
-		* Vim (if not, maybe just ed)
-		* Telnet (???!!???)
-	- If (Lord willing, WHEN) it can do that... start on the C client.
 */
 $address = '0.0.0.0';
 $port = 12345;
