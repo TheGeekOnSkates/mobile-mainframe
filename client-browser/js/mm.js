@@ -5,7 +5,7 @@
 // term: The terminal; url: the URL you're connected to;
 // line: The user's input when in HTTP mode; token: also for HTTP mode;
 // on: 1 if connected, 0 if not
-var term, url = "", on = 0, line = "", token = "", ws = 0;
+var term, url = "", on = 0, line = "", token = "", ws = 0, socket;
 
 
 
@@ -44,6 +44,7 @@ async function send(input) {
 async function onInput(data) {
 	if (on == 2) {
 		// Connected in the version 2 setup, using WebSockets
+		ws.send(data);
 		return;
 	}
 	
@@ -87,11 +88,20 @@ async function onInput(data) {
 	
 	if (data == "\r") {
 		// Enter
-		var r = await fetch(url);
-		token = await r.text();
-		send("::welcome::");
-		line = "";
-		on = 1;
+		if (url.startsWith("ws://") || url.startsWith("wss://")) {
+			socket = new WebSocket(url);
+			socket.onmessage = function(e) {
+				term.write(e.data + "\r\n");
+			};
+			line = "";
+			on = 2;
+		} else {
+			var r = await fetch(url);
+			token = await r.text();
+			send("::welcome::");
+			line = "";
+			on = 1;
+		}
 		return;
 	}
 	

@@ -10,11 +10,6 @@ Okay, now that this actually works, what's next:
 
 // Code from the tutorial, with a minor mod on my part:
 var host = 'ws://0.0.0.0:12345/server2.php';
-var socket = new WebSocket(host);
-socket.onmessage = function(e) {
-    console.log(e.data);
-    term.write(e.data + "\r\n");
-};
 
 2. Mod the server so that if a client disconnects, instead of showing an
 error, log it and quit trying to talk to that client.
