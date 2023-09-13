@@ -1,16 +1,7 @@
 <?php
 
-/*
-YES!!!!
-https://medium.com/@cn007b/super-simple-php-websocket-example-ea2cd5893575
-
-To start the server:	php -q server2.php
-
-URL to enter:	ws://0.0.0.0:12345/server2.php
-	- Maybe try this with "localhost" instead of "0.0.0.0"?
-
-*/
-$address = '0.0.0.0';
+//$address = '0.0.0.0';
+$address = 'localhost';
 $port = 12345;
 
 // Create WebSocket.
@@ -31,4 +22,14 @@ $headers = "HTTP/1.1 101 Switching Protocols\r\n";
 $headers .= "Upgrade: websocket\r\n";
 $headers .= "Connection: Upgrade\r\n";
 $headers .= "Sec-WebSocket-Version: 13\r\n";
+$headers .= "Sec-WebSocket-Accept: $key\r\n\r\n";
+socket_write($client, $headers, strlen($headers));
+
+// Send messages into WebSocket in a loop.
+while (true) {
+    sleep(1);
+    $content = "\033c\033[34mNow: \033[0m" . time();
+    $response = chr(129) . chr(strlen($content)) . $content;
+    socket_write($client, $response);
+}
 
