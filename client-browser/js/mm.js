@@ -44,7 +44,8 @@ async function send(input) {
 async function onInput(data) {
 	if (on == 2) {
 		// Connected in the version 2 setup, using WebSockets
-		ws.send(data);
+		socket.send(data);
+		term.write(data);
 		return;
 	}
 	
@@ -93,6 +94,10 @@ async function onInput(data) {
 			socket.onmessage = function(e) {
 				term.write(e.data + "\r\n");
 			};
+			socket.onclose = function() {
+				term.write("Connection closed\r\n\n");
+				on = 0;
+			};
 			line = "";
 			on = 2;
 		} else {
@@ -129,9 +134,6 @@ Looks like the it works like this:
 ws = new WebSocket("ws://my-url-here");
 ws.on("open", function() {
 	console.log("connected");
-});
-ws.on("close", function() {
-	console.log("connection closed");
 });
 ws.on("message", function(message) {
 	// Output message to the terminal
