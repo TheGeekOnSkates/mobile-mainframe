@@ -45,7 +45,7 @@ async function onInput(data) {
 	if (on == 2) {
 		// Connected in the version 2 setup, using WebSockets
 		socket.send(data);
-		term.write(data);
+		//term.write(data);
 		return;
 	}
 	
@@ -92,7 +92,7 @@ async function onInput(data) {
 		if (url.startsWith("ws://") || url.startsWith("wss://")) {
 			socket = new WebSocket(url);
 			socket.onmessage = function(e) {
-				term.write(e.data + "\r\n");
+				term.write(e.data);
 			};
 			socket.onclose = function() {
 				term.write("Connection closed\r\n\n");

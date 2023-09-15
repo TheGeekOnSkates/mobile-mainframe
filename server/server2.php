@@ -13,25 +13,34 @@ if (is_null($server)) exit("Error creating server");
 $client = WS_CreateClient($server);
 if (is_null($client)) exit("Error creating client");
 
-/*
-// Experiment: Run ed and relay info between ed and the browser
-// This was also AI-generated, and didn't work, but I'm saving it cuz I
-// plan to revisit it tomorrow nite :-)
+socket_set_nonblock($client);
+
+
+// Still experimenting with passing data to/from command-line apps
 $descriptorspec = array(
-   array("pipe", "r"),  // stdin
-   array("pipe", "w"),  // stdout
-   array("pipe", "w")   // stderr
+   0 => array("pipe", "r"),  // stdin
+   1 => array("pipe", "w"),  // stdout
+   2 => array("pipe", "w"),  // stderr
 );
-$process = proc_open("/usr/games/gnuchess", $descriptorspec, $pipes);
-*/
+$cwd = '/var/www/html/mm';
+$process = proc_open('stdbuf -o0 /usr/bin/vim 2>&1', $descriptorspec, $pipes, $cwd);
+
+stream_set_blocking($pipes[0], 0);
+stream_set_blocking($pipes[1], 0);
+stream_set_blocking($pipes[2], 0);
 
 // Send messages into WebSocket in a loop.
 while (true) {
+	$output = fgetc($pipes[1]);
+	if ($output !== false) WS_Write($client, $output);
+	
+	// Is this not sending to $pipes[0]?
 	$input = "";
     $input = socket_read($client, 1024);
-	$input = WS_Translate($input);
-	
-	WS_Write($client, "Received: " . $input);
+	if ($input !== false) {
+		$input = WS_Translate($input);
+		fputs($pipes[0], $input);
+	}
 	
 	/*
 	// Send $input to gnuchess
