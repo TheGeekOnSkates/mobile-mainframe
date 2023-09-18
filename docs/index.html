@@ -62,7 +62,7 @@
 			<li><a href="#server">Server</a></li>
 			<li><a href="#browser">Browser client</a></li>
 			<li><a href="#terminal">Terminal client</a></li>
-			<li><a href="#v2">Plans for version 2</a></li>
+			<li><a href="#v2">Status of version 2.0</a></li>
 		</ul></nav>
 	</div>
 	<main>
@@ -220,44 +220,12 @@
 		positive side, it doesn't have the CORS restriction.
 		</p>
 		<img style="width:100%" src="terminal.png" alt="Example of what the terminal client looks like" longdesc="The main difference as far as screen reader users are concerned is the URL.  In the web version, I used a relative path (starting with ../).  In the terminal, I had to use the full URL, http://localhost/mobile-mainframe/server/server.php.  The URL might be different for you depending on how your server is set up."/>
-		<h1 id="v2">Plans for version 2.0</h1>
-		<p>
-		Version 1.0 is done, and it works, and that's neat.  But version 2
-		is where I hope to see this project become what I originally had in
-		mind.  When I came up with this idea of replacing HTML with text, I
-		didn't just mean black-and-white, line-oriented text: I meant more
-		like a full-on "smart" terminal with ANSI support and "real-time"
-		communication.  <strong>TL;DR: WebSockets</strong>
-		</p>
+		<h1 id="v2">Status of version 2.0</h1>
 		<ul>
-			<li>
-			So first off is the terminal-based client: As it turns out,
-			there's a freed/open-source library called <a href="https://libwebsockets.org/" target="_blank">libwebsockets</a>
-			that looks like exactly what I'm looking for.  So the terminal
-			client will have to be rewritten in C... but on the positive
-			side, libwebsockets also supports cookie-based sessions, wo it
-			could lead to some improvements over v1 even on the HTTP side.
-			</li>
-			<li>
-			That's great if you're working in a terminal, but what about the
-			browser?  Well for that, <a href="https://xtermjs.org/" target="_blank">xterm.js</a>
-			is about as good as it gets!  Screen reader accessible, full
-			support for ANSI escape codes, and it's still pretty light (just
-			one CSS file and one JS file).  I've seen people run everything
-			from vim (a text editor) to bastet (a Tetris clone) to full-on
-			SSH shells over WebSockets using xterm.js.
-			</li>
-			<li>
-			On the server side... I don't have any huge changes in mind, but
-			I do have a couple smaller ideas.  I already mentioned session
-			cookies, but it's not just that.  There's also the possibility
-			of creating some more examples for how to set up a server.  I
-			recently got a free Python hosting account, so I'll probably do
-			a server example in Python/Bottle.  No way to do them all (Rails
-			and ASP.NET and Java and a bazillion frameworks like CodeIgniter
-			and Laravel and so on and so on and so on) but one or two more
-			sounds dosable. :-)
-			</li>
+			<li>The browser-based terminal is connecting to my new server program over WebSockets (tested in Brave and Firefox on Linux Mint 64-bit)</li>
+			<li>The server program acts as a "middle-man" between the user and a command-line program (I've used Vim, a few interactive language REPls, and even a MUD).</li>
+			<li>The server program support multiple connections, but I'm still debugging this.  I also want to make sure it disconnects users if the remote process exits - might be there, but needs more testing.</li>
+			<li>Once that's done, I plan to polish up the terminal a bit more, and then start on the native (Linux) version.</li>
 		</ul>
 		<div style="height:100px;"><!-- spacer --></div>
 	</main>
