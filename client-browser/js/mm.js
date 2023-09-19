@@ -115,11 +115,14 @@ async function onInput(data) {
 			on = 1;
 		}
 		return;
+	} else if (data.startsWith("\033")) {
+		// Arrows, Home, End, Insert, Delete, function keys etc.
+		new Audio("beep.wav").play();
+	} else {
+		// Otherwise, add it to the URL :)
+		url += data;
+		term.write(data);
 	}
-	
-	// Otherwise, add it to the URL :)
-	url += data;
-	term.write(data);
 }
 
 window.onload = function() {
