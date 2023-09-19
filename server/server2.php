@@ -6,7 +6,8 @@
 
 $hostname = "localhost";		// Pretty sure this is always localhost
 $port = 12345;					// The port number
-$command = "vim";				// The command to run
+//$command = "vim";				// The command to run
+$command = "telnet alteraeon.com 3000";				// The command to run
 
 
 
@@ -30,7 +31,19 @@ $clients = array($server);
 // And this array will store the client sockets AND associated processes
 $users = array();
 
+// Set up a custom error handler
 function on_error($as_number, $as_string, $file, $line) {
+	// Apparently, error #32 (broken pipe) happens "because the *SERVER*
+	// socket has closed and is no longer listening..." but a disconnected
+	// client is still trying to send it data.  Not sure how accurate that
+	// is, but if that's the case, then we can safely ignore that error.
+	// Otherwise, it gets repeated in an infinite loop, and we don't need to
+	// overload error_log or any other file with all that garbage
+	// See https://stackoverflow.com/questions/17678146/how-to-handle-socket-broken-pipe-error-32-in-php
+	// Another site says "The socket listener is closing the connection", so
+	// it seems that is the case (server stopped listening)...
+	// https://www.appsloveworld.com/php/72/writing-to-a-socket-and-handling-broken-pipes
+	if (strpos($as_string, "Broken pipe") !== false) return;
 	echo $file . ", line " . $line . ": " . $as_string . PHP_EOL;
 }
 set_error_handler("on_error");
