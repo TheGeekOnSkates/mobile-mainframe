@@ -45,7 +45,6 @@ async function onInput(data) {
 	if (on == 2) {
 		// Connected in the version 2 setup, using WebSockets
 		socket.send(data);
-		//term.write(data);
 		return;
 	}
 	
@@ -89,13 +88,21 @@ async function onInput(data) {
 	
 	if (data == "\r") {
 		// Enter
+		term.write("\r\n");
 		if (url.startsWith("ws://") || url.startsWith("wss://")) {
 			socket = new WebSocket(url);
 			socket.onmessage = function(e) {
 				term.write(e.data);
 			};
+			socket.onerror = function(error) {
+				term.write("\x1b[31m" + error + "\r\n\n");
+				socket.close();
+				on = 0;
+			};
 			socket.onclose = function() {
-				term.write("Connection closed\r\n\n");
+				term.write("\r\nConnection closed\r\n\n");
+				term.write("----------------------------------------------------------------------------\n\n");
+				term.write("\x1b[34mEnter address:   \x1b[0m");
 				on = 0;
 			};
 			line = "";
@@ -129,16 +136,3 @@ window.onload = function() {
 	url = line = token = "";
 };
 
-/*
-Looks like the it works like this:
-ws = new WebSocket("ws://my-url-here");
-ws.on("open", function() {
-	console.log("connected");
-});
-ws.on("message", function(message) {
-	// Output message to the terminal
-});
-ws.send("some message here");
-
-
-*/

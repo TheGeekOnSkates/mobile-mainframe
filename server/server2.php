@@ -4,7 +4,9 @@
 // SETTINGS
 // ------------------------------------------------------------------------
 
-$command = "vim";
+$hostname = "localhost";		// Pretty sure this is always localhost
+$port = 12345;					// The port number
+$command = "vim";				// The command to run
 
 
 
@@ -19,7 +21,7 @@ include_once("./ws.php");
 set_time_limit(0);
 
 // Create the server socket
-$server = WS_CreateServer("localhost", 12345);
+$server = WS_CreateServer($hostname, $port);
 if (is_null($server)) exit("Error creating server");
 
 // Create an array to store client sockets for socket_select purposes
@@ -28,9 +30,14 @@ $clients = array($server);
 // And this array will store the client sockets AND associated processes
 $users = array();
 
+function on_error($as_number, $as_string, $file, $line) {
+	echo $file . ", line " . $line . ": " . $as_string . PHP_EOL;
+}
+set_error_handler("on_error");
+
 while (true) {
     // Copy the array of client sockets
-    $read = array_values($clients);
+    $read = $clients;
 
     // Check for changes in the socket status
     socket_select($read, $write, $except, 0);
@@ -77,12 +84,33 @@ while (true) {
 		// If the process is no longer running, disconnect the user
 		$status = proc_get_status($user["process"]);
 		if (!$status["running"]) {
-			socket_close($user["socket"]);
-			// $user["socket"] = NULL;
-			// Also gotta close the pipes and process if not open.
-			unset($user);
+			if (!is_null($user["socket"])) {
+				socket_close($user["socket"]);
+				$index = array_search($user["socket"], $clients);
+				unset($clients[$index]);
+				$user["socket"] = NULL;
+			}
 			continue;
 		}
+		
+		/*
+		// If the user has been disconnected, kill the process
+		// This sometimes spits errors; this is my next bug battle :-D
+		$status = socket_get_status($user["socket"]);
+		if ($status["eof"]) {
+			// Client disconnected
+			if (!is_null($user["socket"])) {
+				socket_close($user["socket"]);
+				$index = array_search($user["socket"], $clients);
+				unset($clients[$index]);
+				$user["socket"] = NULL;
+			}
+			fclose($user["stdin"]);
+			fclose($user["stdout"]);
+			fclose($user["stderr"]);
+			proc_close($user["process"]);
+		}
+		*/
 		
 		// Get output from the process, if there is any,
 		// and if so send it to the client
@@ -93,15 +121,7 @@ while (true) {
 		// send it to the process
 		$input = "";
 		$input = socket_read($user["socket"], 1024);
-        if ($input === false) {
-			// Client disconnected - Do I need to socket_close?
-			//socket_close($user["socket"]);
-			// $user["socket"] = NULL;
-			// Also gotta close the pipes and process if not open.
-			unset($user);
-			continue;
-		}
-		if ($input == "") continue;
+        if ($input === false || $input === "") continue;
 		$input = WS_Translate($input);
 		fputs($user["stdin"], $input);
 	}
