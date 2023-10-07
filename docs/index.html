@@ -47,6 +47,11 @@
 		font-family: monospace;
 		color: navy;
 	}
+	.command {
+		background: silver;
+		font-weight: bold;
+		font-size: 1rem;
+	}
 	</style>
 </head>
 <body>
@@ -138,7 +143,7 @@
 		with version 2.0, Mobile Mainframe supports the WebSockets protocol,
 		and comes with a PHP script where all you have to do is give it a
 		port number and a command (including something like
-		<code>telnet yourmainframe.com 123</code>) and bingo!  You really do
+		<code >telnet yourmainframe.com 123</code>) and bingo!  You really do
 		have access to your mainframe from a mobile device!
 		</p>
 		<h1 id="is">What this IS</h1>
@@ -185,7 +190,7 @@
 			Once that's done, the next thing you'll need to dois run it.
 			The commands I used in testing were:<br/>
 		</p>
-		<code><pre>cd /var/www/html/mobile-mainframe
+		<code><pre class="command">cd /var/www/html/mobile-mainframe
 php -q ./server2.php &amp;</pre></code>
 		<p>
 			I won't explain what all those options are, yoou can read the
@@ -194,20 +199,19 @@ php -q ./server2.php &amp;</pre></code>
 		</p>
 		<h1 id="browser">Terminal-in-a-browser</h1>
 		<p>
-			LEFT OFF HERE
-			
 			With <a href="https://xtermjs.org/" target="_blank">xterm.js</a>
 			and the WebSockets API (a standard web thing), I geek-rigged my
 			own terminal-in-a-browser.  This should work on any device that
 			supports modern web standards (not just mobile devices).
 		</p>
-		<img style="width:100%" src="browser.png" alt="Example of what the browser client looks like" longdesc="In this example, I connected to ../server/server.php, then it greeted me with a goofy intro.  The main thing to know, if you're hearing this from a screen reader, is that everything is done using a multi-line text box."/>
+		<img style="width:100%" src="browser.png" alt="Screenshot of Alter Aeon running in the Brave web browser" longdesc="If you're hearing a screen reader speak this to you, I strongly recommend this awesome game.  alteraeon.com has the details."/>
+		<h1 id="terminal">Other Terminals</h1>
 		<p>
 		Now if you want to use a real terminal (or cool-retro-term,
 		my favorite terminal emulator), there are tools already built
 		for this exact purpose.  Foe example, I used <a href="https://lindevs.com/install-websocat-on-ubuntu/" target="_blank">websocat</a>.
 		After following the instructions there, I ran the following command:<br/>
-		<code>websocat --null-terminated --binary ws://localhost:12345/server2.php</code></br>
+		<code class="command">websocat --null-terminated --binary ws://localhost:12345/server2.php</code></br>
 		Of course I had to start my server first (see the next section
 		for how to do that).  And unlike others I tried, websocat was
 		surprisingly good!  It worked great on most of the programs I
@@ -215,24 +219,19 @@ php -q ./server2.php &amp;</pre></code>
 		knowledgeable about Bash than me can help find a solution to
 		that).  But if all you want is the one for browsers, then
 		you're all set.  You don't have to worry about any of this.
-		<h1 id="terminal">Other Terminals</h1>
-		<p>
-		But can we go even lighter?  What if you're using Termux on Android,
-		or whichever terminal app Apple hasn't banned off iOS?  For this, I
-		created a simple Python script.  So if you're a real terminal fan
-		(like me) you can cut out the browser altogether and just use that.
-		It was built for Python 3, and it uses the <code>requests</code>
-		module (which I think is standard now?  lol I forget).  But on the
-		positive side, it doesn't have the CORS restriction.
-		</p>
 		<img style="width:100%" src="terminal.png" alt="Example of what the terminal client looks like" longdesc="The main difference as far as screen reader users are concerned is the URL.  In the web version, I used a relative path (starting with ../).  In the terminal, I had to use the full URL, http://localhost/mobile-mainframe/server/server.php.  The URL might be different for you depending on how your server is set up."/>
-		<h1 id="v2">Status of version 2.0</h1>
-		<ul>
-			<li>The browser-based terminal is connecting to my new server program over WebSockets (tested in Brave and Firefox on Linux Mint 64-bit)</li>
-			<li>The server program acts as a "middle-man" between the user and a command-line program (I've used Vim, a few interactive language REPls, and even a MUD).</li>
-			<li>The server program support multiple connections, but I'm still debugging this.  I also want to make sure it disconnects users if the remote process exits - might be there, but needs more testing.</li>
-			<li>Once that's done, I plan to polish up the terminal a bit more, and then start on the native (Linux) version.</li>
-		</ul>
+		<h1 id="future">Plans for future versions</h1>
+		<p>
+		At this point, the project is in maintenance mode.  If I (or you)
+		find a bug, we can work on that.  If we find it's missing something
+		useful, we can add it.  I do kinda want to phase out support for the
+		version 1 way of doing things (over plain HTTP), just cuz if you
+		want communications over plain HTTP that work in a terminal AND a
+		browser... just don't use JS (lol).  But it's not important that the
+		code go without that legacy code.  Now that it works, I plan to
+		shift gears to another couple projects - the project I had in mind
+		when I built it in the first place. :-)
+		</p>
 		<div style="height:100px;"><!-- spacer --></div>
 	</main>
 </body>
