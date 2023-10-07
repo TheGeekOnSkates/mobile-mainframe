@@ -199,29 +199,22 @@ php -q ./server2.php &amp;</pre></code>
 			With <a href="https://xtermjs.org/" target="_blank">xterm.js</a>
 			and the WebSockets API (a standard web thing), I geek-rigged my
 			own terminal-in-a-browser.  This should work on any device that
-			supports modern web standards (not just mobile devices).  Now if
-			you want to use a real terminal (or cool-retro-term, my favorite
-			terminal emulator), there are tools already built for this exact
-			purpose.  For my computer, I used <a href="https://lindevs.com/install-websocat-on-ubuntu/" target="_blank">websocat</a>.
-			After following the instructions there, I ran the following command:<br/>
-			<code>websocat --null-terminated --binary ws://localhost:12345/server2.php</code></br>
-			Of course I had to start my server first (see the next section
-			for how to do that).  And unlike others I tried, websocat was
-			surprisingly good!  It worked great on most of the programs I
-			used for testing (Vim was not great, but I think someone more
-			knowledgeable about Bash than me can help find a solution to
-			that).  But if all you want is the one for browsers, then
-			you're all set.  You don't have to worry about any of this.
+			supports modern web standards (not just mobile devices).
 		</p>
 		<img style="width:100%" src="browser.png" alt="Example of what the browser client looks like" longdesc="In this example, I connected to ../server/server.php, then it greeted me with a goofy intro.  The main thing to know, if you're hearing this from a screen reader, is that everything is done using a multi-line text box."/>
 		<p>
-		Now the main thing to keep in mind, if you're going to use this
-		browser-based client, is that <a href="https://developer.mozilla.org/en-US/docs/Glossary/CORS" target="_blank">CORS</a>
-		is a problem.  You can only connect to pages on your domain, which
-		is a bit annoying.  In another words, if I host this on example.com,
-		I can't connect to servers at geekonskates.com.  Not a big deal, but
-		still a thing to be aware of.
-		</p>
+		Now if you want to use a real terminal (or cool-retro-term,
+		my favorite terminal emulator), there are tools already built
+		for this exact purpose.  Foe example, I used <a href="https://lindevs.com/install-websocat-on-ubuntu/" target="_blank">websocat</a>.
+		After following the instructions there, I ran the following command:<br/>
+		<code>websocat --null-terminated --binary ws://localhost:12345/server2.php</code></br>
+		Of course I had to start my server first (see the next section
+		for how to do that).  And unlike others I tried, websocat was
+		surprisingly good!  It worked great on most of the programs I
+		used for testing (Vim was not great, but I think someone more
+		knowledgeable about Bash than me can help find a solution to
+		that).  But if all you want is the one for browsers, then
+		you're all set.  You don't have to worry about any of this.
 		<h1 id="terminal">Other Terminals</h1>
 		<p>
 		But can we go even lighter?  What if you're using Termux on Android,
