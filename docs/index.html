@@ -3,17 +3,19 @@
 <head>
 	<title>Mobile Mainframe</title>
 	<style>
+	* {
+		padding: 10px;
+		margin: 10px;
+	}
 	.left {
 		position:absolute; left: 0px; top:0px;
 		width: 160px; height: 110vw;
 		background: #000;
-		margin: 0px; padding: 0px;
 	}
 	main {
 		position:absolute; left: 160px; top:0px;
 		max-width: 800px; height: 100vw;
 		overflow-y: scroll;
-		margin: 0px; padding: 0px;
 	}
 	header img{
 		width:100%;
@@ -219,7 +221,7 @@ php -q ./server2.php &amp;</pre></code>
 		knowledgeable about Bash than me can help find a solution to
 		that).  But if all you want is the one for browsers, then
 		you're all set.  You don't have to worry about any of this.
-		<img style="width:100%" src="terminal.png" alt="Example of what the terminal client looks like" longdesc="The main difference as far as screen reader users are concerned is the URL.  In the web version, I used a relative path (starting with ../).  In the terminal, I had to use the full URL, http://localhost/mobile-mainframe/server/server.php.  The URL might be different for you depending on how your server is set up."/>
+		<img style="width:100%" src="terminal.png" alt="Alter Aeon running in cool-retro-term" longdesc="The only real difference to note here is the command above, which is visible at the top of the screen."/>
 		<h1 id="future">Plans for future versions</h1>
 		<p>
 		At this point, the project is in maintenance mode.  If I (or you)
