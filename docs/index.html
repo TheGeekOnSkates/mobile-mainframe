@@ -7,19 +7,20 @@
 		padding: 10px;
 		margin: 10px;
 	}
+	body, .left { margin: 0px; }
 	.left {
-		position:absolute; left: 0px; top:0px;
+		position:absolute; left: 0px; top: 0px;
 		width: 160px; height: 110vw;
 		background: #000;
+		padding: 10px;
 	}
-	main {
-		position:absolute; left: 160px; top:0px;
-		max-width: 800px; height: 100vw;
-		overflow-y: scroll;
+	.left * {
+		padding: 0px; margin: 0px;
+		padding-bottom: 10px;
 	}
 	header img{
-		width:100%;
-		height:auto;
+		width: 100%;
+		height: auto;
 	}
 	header h1{
 		color:#00F;
@@ -43,7 +44,9 @@
 		color:#FFF;
 	}
 	main {
-		padding: 10px;
+		position:absolute; left: 160px; top:0px;
+		max-width: 800px; height: 100vw;
+		overflow-y: scroll;
 	}
 	h1, h2, h3, h4 {
 		font-family: monospace;
@@ -139,9 +142,9 @@
 		couldn't do that legally - and I'm not cool with that.
 		</p>
 		<p>
-		<strong>BUT:</strong> If your geek cred is higher than mine - if you
+		<strong style="padding: 0px;">BUT:</strong> If your geek cred is higher than mine - if you
 		have an actual mainframe somewhere to telnet into, and you want
-		to have access to it from your browser... you can do that.  Starting
+		to have access to it from your browser... you can do that!  Starting
 		with version 2.0, Mobile Mainframe supports the WebSockets protocol,
 		and comes with a PHP script where all you have to do is give it a
 		port number and a command (including something like
