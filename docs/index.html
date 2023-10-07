@@ -59,10 +59,10 @@
 			<li><a href="#intro">Intro</a></li>
 			<li><a href="#isnt">What this is NOT</a></li>
 			<li><a href="#is">What this IS</a></li>
-			<li><a href="#server">Server</a></li>
-			<li><a href="#browser">Browser client</a></li>
-			<li><a href="#terminal">Terminal client</a></li>
-			<li><a href="#v2">Status of version 2.0</a></li>
+			<li><a href="#server">Server Setup</a></li>
+			<li><a href="#browser">Terminal-in-a-browser</a></li>
+			<li><a href="#terminal">Other Terminals</a></li>
+			<li><a href="#future">Plans for future versions</a></li>
 		</ul></nav>
 	</div>
 	<main>
@@ -133,7 +133,7 @@
 		</p>
 		<p>
 		<strong>BUT:</strong> If your geek cred is higher than mine - if you
-		have an actual mainframe somewhere that to telnet into, and you want
+		have an actual mainframe somewhere to telnet into, and you want
 		to have access to it from your browser... you can do that.  Starting
 		with version 2.0, Mobile Mainframe supports the WebSockets protocol,
 		and comes with a PHP script where all you have to do is give it a
@@ -144,71 +144,74 @@
 		<h1 id="is">What this IS</h1>
 		<p>
 		<strong>Short version: A new, lighter way to send and receive text
-		over the web.</strong>  This software includes two clients: one for
-		an actual terminal program (like xterm or cmd.exe) and the other for
-		a web browser.  It defines a simple communication protocol (for lack
-		of a better term) between clients and servers.  It also includes an
-		example server, written in PHP.  At the moment, it does this using
-		HTTP(S); eventually, I'd like it to support WebSockets, but for now
-		it uses the same request/response setup as its bloated counterparts.
-		I'll get into all the details of it in the following manual.
-		</p>
-		<h1 id="server">Server</h1>
-		<p>
-		Before I can talk about much else, it's important to go over how the
-		server works.  The big difference between Mobile Mainframe and basic
-		websites is that every page is a server.  What I mean is, users can
-		"connect to" any page that supports the Mobile Mainframe way of
-		doing things (I hesitate to call it a "protocol" cuz it's not like
-		TCP or UDP or WebSockets... it's more of a way to get clients and
-		servers talking to each other).  So the client/server communication
-		process works like this:
+		over the web.</strong>  This software includes two components:
 		</p>
 		<ol>
-			<li>Clients ask the user for a URL.</li>
 			<li>
-			Users enter the URL, and the client sends the server an HTTP(S)
-			request, asking the server for a token; this token gets passed
-			to all future requests, and basically works like a session
-			cookie.  The client gets the token and then sends another HTTP
-			request, this time with the code <code>::welcome::</code>.
-			This tells the server, "hey, I got your token, now show me what
-			else I can do on here".
-			</li>
-			<li>The user sends whatever commands the server allows</li>
-			<li>
-			The server responds accordingly, and this back-and-forth
-			continues for as long as the user wants to use this server.
+			<strong>A server: </strong>
+			This is where the "magic" happens.  I'll explain more shortly.
 			</li>
 			<li>
-			When the user wants to exit, s/he types "exit", and the client
-			sends another code, <code>::end-session::</code>.  This tells
-			the server, "the user is done, delete whatever mechanism you
-			have in place to store user session ddata."
+			<strong>A terminal: </strong>
+			This is what you'll use to connect to the server from your
+			mobile device or computer.
 			</li>
 		</ol>
+		<h1 id="server">Server setup</h1>
 		<p>
-		And the rest is entirely up to you.  If you want to store users'
-		session state in a database, or (as I did) a text file, you can do
-		that.  Cookie-based sessions are not currently an option, mainly
-		because one of the two clients doesn't support it.  But all the real
-		"heavy lifting" is done on the server-side.  There is no dynamically
-		loading UI, no placeholders for where content <em>will</em> be, none
-		of the junk that geeks like me dislike about the modern web.  JS is
-		necessary, but can be kept to a minimum.  Even the markup is cut out
-		as HTML is replaced with plain text - there are no tags.  I could
-		see this working really well, even on low-end phones in areas with
-		lousy internet service.  It's as light as a modern-web-thing can
-		possibly get unless you're gonna use a terminal app.  Which brings
-		me to the next part: clients.
+			So the "server" is not a full-on software stack.  There's no
+			crazy convoluted containerization shenanigans going on here,
+			just a little PHP script.  But I call that script a server
+			because it's responsible for serving your software.  It works
+			by relaying data between the client (terminal) and a program
+			of your choice.  I've tested it with vim (a text editor),
+			language shells (GForth, Python), a game I built in standard C
+			(with zero OS-specific dependencies), and of course, a MUD (MUDs
+			were the video games they played back in the Dawn of Time).
+			So PHP is just a "middle-man".  I chose PHP cuz it still powers
+			like 78% of the web, and because it's what I know best.  If you
+			want to add a server in another language, feel free to see how I
+			did it and contribute!
 		</p>
-		<h1 id="browser">Browser client</h1>
 		<p>
-		Because this thing's supposed to work on mobile devices, this new
-		text-only way of doing things still needs to run in a web browser
-		(obviously, lol).  Because of the geeky name and the ridiculously
-		old-school style of this project, I made it look kinda like a piece
-		of paper on one of those old teletype terminals. :-)
+			To set up the server, the first thing you'll want to do is go
+			to my "server2.php" file and edit the port number and command
+			you want your Mobile Mainframe server to use.  I've explained
+			what's what in comments, so you should be all good there.  You
+			might need to change firewall settings and stuff though, so it
+			might not be doable on shared web hosting.
+		</p>
+		<p>
+			Once that's done, the next thing you'll need to dois run it.
+			The commands I used in testing were:<br/>
+		</p>
+		<code><pre>cd /var/www/html/mobile-mainframe
+php -q ./server2.php &amp;</pre></code>
+		<p>
+			I won't explain what all those options are, yoou can read the
+			<a href="https://www.php.net/" target="_blank">PHP docs</a>
+			for that, but that's all you need to do on the server-side.
+		</p>
+		<h1 id="browser">Terminal-in-a-browser</h1>
+		<p>
+			LEFT OFF HERE
+			
+			With <a href="https://xtermjs.org/" target="_blank">xterm.js</a>
+			and the WebSockets API (a standard web thing), I geek-rigged my
+			own terminal-in-a-browser.  This should work on any device that
+			supports modern web standards (not just mobile devices).  Now if
+			you want to use a real terminal (or cool-retro-term, my favorite
+			terminal emulator), there are tools already built for this exact
+			purpose.  For my computer, I used <a href="https://lindevs.com/install-websocat-on-ubuntu/" target="_blank">websocat</a>.
+			After following the instructions there, I ran the following command:<br/>
+			<code>websocat --null-terminated --binary ws://localhost:12345/server2.php</code></br>
+			Of course I had to start my server first (see the next section
+			for how to do that).  And unlike others I tried, websocat was
+			surprisingly good!  It worked great on most of the programs I
+			used for testing (Vim was not great, but I think someone more
+			knowledgeable about Bash than me can help find a solution to
+			that).  But if all you want is the one for browsers, then
+			you're all set.  You don't have to worry about any of this.
 		</p>
 		<img style="width:100%" src="browser.png" alt="Example of what the browser client looks like" longdesc="In this example, I connected to ../server/server.php, then it greeted me with a goofy intro.  The main thing to know, if you're hearing this from a screen reader, is that everything is done using a multi-line text box."/>
 		<p>
@@ -219,7 +222,7 @@
 		I can't connect to servers at geekonskates.com.  Not a big deal, but
 		still a thing to be aware of.
 		</p>
-		<h1 id="terminal">Terminal client</h1>
+		<h1 id="terminal">Other Terminals</h1>
 		<p>
 		But can we go even lighter?  What if you're using Termux on Android,
 		or whichever terminal app Apple hasn't banned off iOS?  For this, I
