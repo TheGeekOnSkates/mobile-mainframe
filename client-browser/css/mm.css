@@ -1,0 +1,8 @@
+#terminal {
+	width: 800px;
+	margin: auto;
+	padding: 10px;
+	border: 16px inset silver;
+	border-radius: 16px;
+	background: #000;
+}

@@ -1,102 +1,11 @@
 <!doctype html>
 <html lang="en">
 <head>
-<title>Mobile Mainframe 1.0</title>
-<link rel="stylesheet" href="https://unpkg.com/@thesephist/paper.css/dist/paper.min.css" />
-<style>
-@font-face {
-	font-family: "teletype";
-	src: url("TELETYPE1945-1985.ttf");
-}
-body{
-	background: beige;
-	padding: 8px;
-	text-align: center;
-	overflow: hidden;
-}
-textarea{
-	margin: auto;
-	width: 80vw;
-	height: 95vh;
-	resize: none;
-	background: linear-gradient(0deg, #F0F0F0, #FFF 20%, #FFF 80%, #F0F0F0);
-	color: #000;
-	font-family: "teletype", monospace;
-}
-textarea:focus{outline: none;}
-</style>
-</head>
-<body>
-	<textarea class="paper" autofocus spellcheck="false" aria-label="output" id="dummy"></textarea>
-<script>
-
-var url = "", token = "", line = "";
-
-/**
- * Sends user input to the server
- * @param {string} input The input
- */
-async function send(input) {
-	try {
-		var r = await fetch(url, {
-			method: 'POST',
-			headers:{'Content-Type':'application/x-www-form-urlencoded'},
-			body: "i=" + encodeURIComponent(input) + "&&t=" + token
-		});
-		r = await r.text();
-		dummy.value += r + "\n";
-		if (input == "::end-session::")
-			dummy.value += "Connection closed.\n\n----------------------------------------------------------------------------\n\nENTER ADDRESS:\n";
-	} catch(wtf) {
-		dummy.value += wtf + "\n";
-	}
-}
-
-// Update the textarea on a loop
-setInterval(async function() {
-	// This was making it impossible to copy output
-	//dummy.selectionStart = dummy.selectionEnd = dummy.value.length;
-	
-	// Use this to auto-scroll to the bottom (visually)
-	dummy.scrollTop = dummy.scrollHeight;
-	
-	// If there is no input, do nothing
-	if (!line) return;
-	
-	// If the server URL is blank/empty, start a connection
-	if (!url) {
-		url = line;
-		var r = await fetch(url);
-		token = await r.text();
-		send("::welcome::");
-		line = "";
-		return;
-	}
-	
-	// If the line is "exit", close the connection
-	if (line == "exit") {
-		send("::end-session::");
-		url = "";
-		line = "";
-		return;
-	}
-	
-	// Otherwise, it's some other input - send it
-	send(line);
-	line = "";
-}, 100);
-
-dummy.addEventListener("keydown", function(e) {
-	if (e.key == "Enter" || e.which == 13) {
-		var lines = dummy.value.split("\n");
-		line = lines[lines.length - 1];
-	}
-});
-
-window.onload = function() {
-	for (var i=0; i<300; i++) dummy.value += "\n";	// move to bottom
-	dummy.value += "MOBILE MAINFRAME 1.0\nEnter address:\n\n";
-};
-</script>
-</body>
+<title>Mobile Mainframe 2.0</title>
+<link rel="stylesheet" href="css/xterm.css" />
+<link rel="stylesheet" href="css/mm.css" />
+<link rel="shortcut icon" href="favicon.ico"/>
+<script src="js/xterm.js"></script>
+<script src="js/mm.js?v=2"></script>
+</head><body><div id="terminal"></div></body>
 </html>
