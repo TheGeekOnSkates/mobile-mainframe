@@ -185,7 +185,7 @@
 		</p>
 		<p>
 			To set up the server, the first thing you'll want to do is go
-			to my "server2.php" file and edit the port number and command
+			to my "server.php" file and edit the port number and command
 			you want your Mobile Mainframe server to use.  I've explained
 			what's what in comments, so you should be all good there.  You
 			might need to change firewall settings and stuff though, so it
@@ -196,11 +196,19 @@
 			The commands I used in testing were:<br/>
 		</p>
 		<code><pre class="command">cd /var/www/html/mobile-mainframe
-php -q ./server2.php &amp;</pre></code>
+php -q ./server.php &amp;</pre></code>
 		<p>
 			I won't explain what all those options are, yoou can read the
 			<a href="https://www.php.net/" target="_blank">PHP docs</a>
 			for that, but that's all you need to do on the server-side.
+		</p>
+		<p><strong>NOTE:</strong> 
+			The screenshots below show <code>server2.php</code>; that was
+			an old file (renamed to just <code>server.php</code> in version
+			2.1).  But you could have multiple server scripts running at
+			the same time, even with different programs.  They'd have to
+			be on different ports, but I guess my point here is just don't
+			pay too much attention to the URLs in the pics. :-)
 		</p>
 		<h1 id="browser">Terminal-in-a-browser</h1>
 		<p>
@@ -216,7 +224,7 @@ php -q ./server2.php &amp;</pre></code>
 		my favorite terminal emulator), there are tools already built
 		for this exact purpose.  Foe example, I used <a href="https://lindevs.com/install-websocat-on-ubuntu/" target="_blank">websocat</a>.
 		After following the instructions there, I ran the following command:<br/>
-		<code class="command">websocat --null-terminated --binary ws://localhost:12345/server2.php</code></br>
+		<code class="command">websocat --null-terminated --binary ws://localhost:12345/server.php</code></br>
 		Of course I had to start my server first (see the next section
 		for how to do that).  And unlike others I tried, websocat was
 		surprisingly good!  It worked great on most of the programs I
@@ -227,16 +235,15 @@ php -q ./server2.php &amp;</pre></code>
 		<img style="width:100%" src="terminal.png" alt="Alter Aeon running in cool-retro-term" longdesc="The only real difference to note here is the command above, which is visible at the top of the screen."/>
 		<h1 id="future">Plans for future versions</h1>
 		<p>
-		At this point, the project is in maintenance mode.  If I (or you)
-		find a bug, we can work on that.  If we find it's missing something
-		useful, we can add it.  I do kinda want to phase out support for the
-		version 1 way of doing things (over plain HTTP), just cuz if you
-		want communications over plain HTTP that work in a terminal AND a
-		browser... just don't use JS (lol).  But it's not important that the
-		code go without that legacy code.  Now that it works, I plan to
-		shift gears to another couple projects - the project I had in mind
-		when I built it in the first place. :-)
+		At this point, the project is in maintenance mode.  There are a few
+		things I'd like to add, but they'll just have to come with time:
 		</p>
+		<ul>
+			<li>I'd like to test it over SSL (https/wss).  If I ever get SSL on my little web server, I'll do that and fix whatever bugs come up.</li>
+			<li>If I ever get my hands on a Mac, and learn how to use it, I'd like to see if I can figure out why it doesn't work on iOS Safari.  Safari is the new IE if you ask me - but I'd like to support it if possible.  Calling this project mobile anything, and not supporting iOS IE, is kinda silly. :-)</li>
+			<li>I'd kind of like the JS to be a little more polished.  It could use an auto-connect option, maybe make the whole thing a little class, extending off xtermjs' Terminal class, or something like that.  Auto-connect options aside, I'd kind of like my url-reading code to use something like GNU Readline, fully supporting arrow keys and Home/End and all that.</li>
+			<li>And as I discover other WebSockets clients, tools like websocat that work great with Mobile Mainframe, I'd kind of like to keep a running list here.</li>
+		</ul>
 		<div style="height:100px;"><!-- spacer --></div>
 	</main>
 </body>
