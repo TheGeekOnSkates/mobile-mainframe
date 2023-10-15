@@ -6,7 +6,9 @@ This fun little project is [explained in better detail here](https://thegeekonsk
 
 ## Version 2.1
 
-This just reorganized and cleaned things up a bit.
+* Removed code from version 1; we don't need it anymore
+* Added some notes to `server.php` explaining things a bit better
+* Reorganized things a bit, dropping `ws.php` and `xterm.html` etc.
 
 
 ## Version 2.0

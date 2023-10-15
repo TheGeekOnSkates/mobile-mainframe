@@ -4,9 +4,27 @@
 // SETTINGS (This is what you should edit when setting up a server)
 // ------------------------------------------------------------------------
 
-$hostname = "localhost";					// The server name/IP address
-$port = 12345;								// The port number
-$command = "telnet alteraeon.com 3000";		// The command to run
+$hostname = "localhost";
+// This is the server name or IP address.  When I built version 2,
+// localhost worked on my local LAMP stack.  But when I put it on
+// on actual public web server, I had to use the server's IP address.
+
+$port = 12345;
+// This is the port number your server will listen on.  You usually
+// can't use 80, 8080 or 443 (as those are for HTTP/HTTPS and Apache
+// is already listening on those ports).  I went with 12345 just cuz.
+// But I'm a programmer - not a sysadmin.  If you can think of a more
+// meaningful or more practical default port, please let me know. :-)
+
+$command = "telnet alteraeon.com 3000";
+// This is the command to run.  I chose Alter Aeon, my favorite MUD,
+// to demonstrate that you can use Mobile Mainframe to telnet into an
+// actual mainframe if that is a thing you want to do.  However, MUDs
+// and other telnet-based apps are not great, because the data has to
+// travel from the client's browser to your server and then from your
+// server to whatever system you're telnetting into.  This means your
+// program may run slow - not painfully slow, but certainly slower
+// than just using telnet. :-D
 
 
 
