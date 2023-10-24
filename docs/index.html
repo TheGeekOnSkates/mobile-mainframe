@@ -57,6 +57,9 @@
 		font-weight: bold;
 		font-size: 1rem;
 	}
+	main pre, main a, main strong, main em {
+		padding: 0px; margin: 0px;
+	}
 	</style>
 </head>
 <body>
@@ -135,9 +138,9 @@
 		<h1 id="isnt">What this is NOT</h1>
 		<p>
 		Despite its name, "Mobile Mainframe" is NOT a mainframe emulator.  I
-		don't know why you'd want one of those, much less on a mobile phone,
+		don't know why you'd want that, much less on a mobile phone,
 		cuz even for us retro-leving tech geeks there's just not a lot you
-		could really do with that.  Also, most mainframe systems from back
+		could really do with one.  Also, most mainframe systems from back
 		then were proprietary, so even if I really wanted it to be one, I
 		couldn't do that legally - and I'm not cool with that.
 		</p>
@@ -146,11 +149,14 @@
 		have an actual mainframe somewhere to telnet into, and you want
 		to have access to it from your browser... you can do that!  Starting
 		with version 2.0, Mobile Mainframe supports the WebSockets protocol,
-		and comes with a PHP script where all you have to do is give it a
-		port number and a command (including something like
-		<code >telnet yourmainframe.com 123</code>) and bingo!  You really do
-		have access to your mainframe from a mobile device!
+		and I even used it to connect to <a href="https://www.british-legends.com/CMS/index.php/play-the-game/other-ways-to-play" target="_blank">the original MUD</a> (and <a href="https://github.com/PDP-10/MUD1/blob/master/README.md" target="_blank">the MUD1 source code</a> is most definitely meant to run on an actual mainframe - a PDP-10 I think).  
 		</p>
+		<img src="MUD1.png" alt="The original Multi-User Dungeon (MUD) was probably pretty accessible to screen reader users, too!" />
+		<p>
+		So Mobile Mainframe itself isn't a mainframe, but if can give you
+		access to a mainframe from your mobile device if you want. :-)
+		</p>
+
 		<h1 id="is">What this IS</h1>
 		<p>
 		<strong>Short version: A new, lighter way to send and receive text
@@ -168,6 +174,14 @@
 			</li>
 		</ol>
 		<h1 id="server">Server setup</h1>
+		<p style="padding: 4px; border: 1px solid black; background: #FDD;">
+		<strong>WARNING:</strong> There is a bug that I haven't had time to 
+		figure out in the server component: it's a resource-hog.  I don't
+		know what I did wrong, but it eats CPU like I eat pizza.  But until
+		I get time to fix it, there is a workaround: <a href="http://websocketd.com/" target="_blank">websocketd</a>.  Not only will it not go crazy
+		with CPU usage, it also comes with some other options my PHP script
+		doesn't do yet.  It's not perfect, but it's better.
+		</p>
 		<p>
 			So the "server" is not a full-on software stack.  There's no
 			crazy convoluted containerization shenanigans going on here,
@@ -239,6 +253,7 @@ php -q ./server.php &amp;</pre></code>
 		things I'd like to add, but they'll just have to come with time:
 		</p>
 		<ul>
+			<li>The server has a pretty massive bug, and one I haven't had time to fix.  There is an easy workaround - and one I <strong>STRONGLY recommend</strong>: <a href="http://websocketd.com/" target="_blank">websocketd</a>.  This awesome utility is what I used in the screenshot where I served MUD1 on Mobile Mainframe.  It supports all kinds of things my little PHP script just doesn't do (yet); proxies and reverse something and a whole lot of advanced networking tricks I don't fully understand. Oh, and it won't waste CPU usage, so for now, use that (lol).  But someday, that bug needs to be fixed.</li>
 			<li>I'd like to test it over SSL (https/wss).  If I ever get SSL on my little web server, I'll do that and fix whatever bugs come up.</li>
 			<li>If I ever get my hands on a Mac, and learn how to use it, I'd like to see if I can figure out why it doesn't work on iOS Safari.  Safari is the new IE if you ask me - but I'd like to support it if possible.  Calling this project mobile anything, and not supporting iOS IE, is kinda silly. :-)</li>
 			<li>I'd kind of like the JS to be a little more polished.  It could use an auto-connect option, maybe make the whole thing a little class, extending off xtermjs' Terminal class, or something like that.  Auto-connect options aside, I'd kind of like my url-reading code to use something like GNU Readline, fully supporting arrow keys and Home/End and all that.</li>
